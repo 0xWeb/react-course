@@ -7,11 +7,18 @@ import { TURNS } from './constants';
 import { checkWinner, checkEndGame } from './utils/board';
 import WinnerModal from './components/WinnerModal';
 import Board from './components/Board';
+import { saveGameToStorage, resetGameStorage } from './utils/storage';
 
 function App() {
 
-  const [board, setBoard] = useState([null, null, null, null, null, null, null, null, null])
-  const [turn, setTurn] = useState(TURNS.X)
+  const [board, setBoard] = useState(() => {
+    const boardFromStorage = window.localStorage.getItem('board')
+    return boardFromStorage ? JSON.parse(boardFromStorage) : [null, null, null, null, null, null, null, null, null]
+  })
+  const [turn, setTurn] = useState(() => {
+    const turnFromStorage = window.localStorage.getItem('turn')
+    return turnFromStorage ?? TURNS.X
+  })
   const [winner, setWinner] = useState(null)
 
   const updateBoard = (index) => {
@@ -28,6 +35,9 @@ function App() {
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X
     setTurn(newTurn)
 
+    // save the game in localstorage
+    saveGameToStorage({ newBoard, newTurn })
+
     // check if here is a winner
     const newWinner = checkWinner(newBoard)
     if (newWinner) {
@@ -43,6 +53,8 @@ function App() {
     setBoard([null, null, null, null, null, null, null, null, null])
     setTurn(TURNS.X)
     setWinner(null)
+
+    resetGameStorage()
   }
 
   return (
