@@ -23,6 +23,15 @@ const FollowMouse = () => {
     }
   }, [enable])
 
+  // change body className
+  useEffect(() => {
+    document.body.classList.toggle('no-cursor', enable)
+
+    return () => {
+      document.body.classList.remove('no-cursor')
+    }
+  }, [enable])
+
   //window.addEventListener() // <--- is executed ALLWAYS that the componet is rendered --> BAD PRACTICE
 
 
