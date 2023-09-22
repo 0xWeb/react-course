@@ -18,6 +18,9 @@ const FollowMouse = () => {
     }
 
     // clear the events when enable change getEventlisteners(window)
+    // -> when the component is unmounted
+    // -> when dependencies change, before executing
+    // the effect again
     return () => {
       window.removeEventListener('pointermove', handleMove)
     }
