@@ -14,9 +14,9 @@ Creation of the tic-tac-toe game with Javascript logic and using useState, local
 
 ### Tic Tac Toe
 
-## ⌨️ Proyectos de React con código
+## ⌨️ React Projects
 
 | Número | Proyecto | Código | Web |
 | --- | --- | --- | --- |
-| `01` | Twitter Follow Card | [Ver](projects/01-twitter-follow-card/) | [Visitar](https://midu-react-01.surge.sh) |
-| `02` | Tic Tac Toe | [Ver](projects/02-tic-tac-toe/) | [Visitar](https://midu-react-02.surge.sh) |
+| `01` | Twitter Follow Card | [Ver](projects/01-twitter-follow-card/) | [Visitar](https://twitter-follow-card-navy.vercel.app/) |
+| `02` | Tic Tac Toe | [Ver](projects/02-tic-tac-toe/) | [Visitar](https://02-tic-tac-toe.vercel.app/) |
