@@ -20,3 +20,4 @@ Creation of the tic-tac-toe game with Javascript logic and using useState, local
 | --- | --- | --- | --- |
 | `01` | Twitter Follow Card | [Ver](projects/01-twitter-follow-card/) | [Visitar](https://twitter-follow-card-navy.vercel.app/) |
 | `02` | Tic Tac Toe | [Ver](projects/02-tic-tac-toe/) | [Visitar](https://02-tic-tac-toe.vercel.app/) |
+| `03` | Mouse Follower | [Ver](projects/03-mouse-follower/) | [Visitar](https://mouse-follower-bay.vercel.app/) |
