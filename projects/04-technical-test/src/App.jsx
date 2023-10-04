@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import './App.css'
+import { getRandomFact } from "./services/facts"
 
-const CAT_ENPOINT_RANDOM_CAT = `https://catfact.ninja/fact`
 // const CAT_ENDPOINT_IMAGE_URL = `https://cataas.com/cat/says/${firstWord}?size=50&color=red&json=true`
 const CAT_PREFIX_URL = 'https://cataas.com'
 
@@ -10,21 +10,12 @@ export function App() {
     const [fact, setFact] = useState(String)
     const [imageURL, setImageURL] = useState()
 
+
     // UseEffect Divisors // Good practice
 
     // To get the fact about the cats
     useEffect(() => {
-
-        fetch(CAT_ENPOINT_RANDOM_CAT)
-            .then(res => {
-                // TODO: Handle error if !res.ok
-                if (!res.ok) throw new Error('Error fetching fact')
-                return res.json()
-            })
-            .then(data => {
-                const { fact } = data
-                setFact(fact)
-            })
+        getRandomFact().then(firstFact => setFact(firstFact))
 
     }, [])
 
@@ -43,11 +34,17 @@ export function App() {
             })
     }, [fact])
 
-
+    const handleClick = async () => {
+        const newFact = await getRandomFact()
+        setFact(newFact)
+    }
 
     return (
         <main>
             <h1>App de gatos</h1>
+
+            <button onClick={handleClick}>Get New Fact</button>
+
             {fact && <p>{fact}</p>}
             {imageURL && <img src={`${CAT_PREFIX_URL}${imageURL}`} alt={'Image extracted using the first three words'} />}
         </main>
