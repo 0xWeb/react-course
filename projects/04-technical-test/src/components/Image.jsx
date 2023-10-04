@@ -7,6 +7,7 @@ export function Image() {
 
     return (
         <>
+            <Image />
             {imageUrl && <img src={imageUrl} />}
         </>
     )
