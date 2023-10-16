@@ -1,8 +1,9 @@
 
 import './App.css'
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useMovies } from "./hooks/useMovies";
 import { Movies } from './components/Movies';
+import debounce from 'just-debounce-it'
 
 //https://www.omdbapi.com/?apikey=4287ad07&s
 
@@ -40,15 +41,23 @@ function App() {
   const { search, updateSearch, error } = useSearch()
   const { movies, getMovies, loading } = useMovies({ search, sort })
 
+  const debouncedGetMovies = useCallback(
+    debounce(search => {
+      getMovies({ search })
+    }, 500)
+    , [getMovies])
+
   // With Vanilla JS
   const handleSubmit = (event) => {
     event.preventDefault()
     getMovies({ search })
   }
   const handleChange = (event) => {
-    const newQuery = event.target.value
-    if (newQuery.startsWith(' ')) return
-    updateSearch(event.target.value)
+    const newSearch = event.target.value
+    if (newSearch.startsWith(' ')) return
+
+    updateSearch(newSearch)
+    debouncedGetMovies(newSearch)
   }
   const handleSort = () => {
     setSort(!sort)

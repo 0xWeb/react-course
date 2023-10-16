@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo } from 'react';
+import { useState, useRef, useMemo, useCallback } from 'react';
 import { searchMovies } from '../services/movies';
 
 export function useMovies({ search, sort }) {
@@ -8,9 +8,11 @@ export function useMovies({ search, sort }) {
 
     const previusSearch = useRef(search)
 
-    const getMovies = useMemo(() => {
-
-        return async ({ search }) => {
+    // useMemo to values & useCallback to functions.
+    // useCallback works with useMemo to simplify 
+    // the function inside useMemo
+    const getMovies = useCallback(
+        async ({ search }) => {
             if (search === previusSearch.current) return
 
             try {
@@ -24,8 +26,7 @@ export function useMovies({ search, sort }) {
             } finally {
                 setLoading(false)
             }
-        }
-    }, [])
+        }, [])
 
     // Only ejecute the function when the one 
     // of the two parameters is changed
