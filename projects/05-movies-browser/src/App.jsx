@@ -21,7 +21,7 @@ function useSearch() {
       setError('Please, writte the name of the movie')
       return
     }
-    if (search.length < 3) {
+    if (search.length < 2) {
       setTimeout(() => { setError('Please, writte at least 3 characters') }, 1000)
       return
     }
@@ -36,21 +36,22 @@ function useSearch() {
 
 
 function App() {
-
+  const [sort, setSort] = useState(false)
   const { search, updateSearch, error } = useSearch()
-  const { movies, getMovies, loading } = useMovies({ search })
+  const { movies, getMovies, loading } = useMovies({ search, sort })
 
   // With Vanilla JS
-  const handleSubmitVanilla = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault()
-    getMovies()
+    getMovies({ search })
   }
-
   const handleChange = (event) => {
     const newQuery = event.target.value
     if (newQuery.startsWith(' ')) return
     updateSearch(event.target.value)
-
+  }
+  const handleSort = () => {
+    setSort(!sort)
   }
 
   return (
@@ -59,7 +60,8 @@ function App() {
         <h1>
           Movie Browser
         </h1>
-        <form className='form' onSubmit={handleSubmitVanilla}>
+        <form className='form' onSubmit={handleSubmit}>
+          <input type="checkbox" onChange={handleSort} checked={sort} />
           <input onChange={handleChange} value={search} name='search' type="text" placeholder='Harry Potter, Matrix...' />
           <button type='submit'>Search</button>
         </form>
