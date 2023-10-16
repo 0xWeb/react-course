@@ -37,38 +37,20 @@ function useSearch() {
 
 function App() {
 
-  const { movies } = useMovies()
   const { search, updateSearch, error } = useSearch()
+  const { movies, getMovies } = useMovies({ search })
 
   // With Vanilla JS
   const handleSubmitVanilla = (event) => {
     event.preventDefault()
-    console.log({ search });
-
-    // To get all the input data from all the inputs
-    const allFields = Object.fromEntries(
-      new window.FormData(event.target)
-    )
-    console.log(allFields);
-
-    // Get the current data from the selected input
-    const fields = new window.FormData(event.target)
-    const query = fields.get('query')
-    console.log(query);
-  }
-
-  const inputRef = useRef() // this value persits between the renders
-  // With useRef
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    const value = inputRef.current.value
-    console.log(value);
+    getMovies()
   }
 
   const handleChange = (event) => {
     const newQuery = event.target.value
     if (newQuery.startsWith(' ')) return
     updateSearch(event.target.value)
+
   }
 
   return (
