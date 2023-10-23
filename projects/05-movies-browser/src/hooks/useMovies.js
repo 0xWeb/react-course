@@ -28,7 +28,7 @@ export function useMovies({ search, sort }) {
             }
         }, [])
 
-    // Only ejecute the function when the one 
+    // Only ejecute the function when one 
     // of the two parameters is changed
     const sortedMovies = useMemo(() => {
         return sort
