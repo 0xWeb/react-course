@@ -1,10 +1,13 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import './Filter.css'
+
 
 
 function Filters({ changeFilters }) {
 
     const [minPrice, setMinPrice] = useState(0)
+    const minPriceFilterId = useId()
+    const categoryFilterId = useId()
 
     const handleChangeMinPrice = (e) => {
         setMinPrice(e.target.value)
@@ -24,11 +27,11 @@ function Filters({ changeFilters }) {
     return (
         <section className="filters">
             <div>
-                <label htmlFor="price">Min Price:</label>
+                <label htmlFor={minPriceFilterId}>Min Price:</label>
                 <input
                     type="range"
                     name="range"
-                    id="price"
+                    id={minPriceFilterId}
                     min={'0'}
                     max={'2000'}
                     onChange={handleChangeMinPrice}
@@ -37,8 +40,8 @@ function Filters({ changeFilters }) {
             </div>
 
             <div>
-                <label htmlFor="category">Category</label>
-                <select id="category">
+                <label htmlFor={categoryFilterId}>Category</label>
+                <select id={categoryFilterId} onChange={handleChangeCategory}>
                     <option value={'all'}>All</option>
                     <option value={'laptops'}>Laptops</option>
                     <option value={'smartphones'}>Smartphones</option>

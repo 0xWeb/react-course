@@ -1,6 +1,7 @@
 import { products as initialProducts } from "./mocks/products.json"
-import Products from "./components/Products"
 import { useMemo, useState } from "react"
+
+import Products from "./components/Products"
 import Header from "./components/Header"
 
 function App() {
@@ -23,8 +24,6 @@ function App() {
   }
 
   const filterP = useMemo(() => filterProducts(products), [filters])
-
-  console.log(filterP);
 
   return (
     <>
