@@ -1,15 +1,22 @@
 import { products as initialProducts } from "./mocks/products.json"
-import { useMemo, useState } from "react"
+import { useContext, useMemo, useState } from "react"
 
 import Products from "./components/Products"
 import Header from "./components/Header"
+import Footer from "./components/Footer"
 
-function App() {
+import { FiltersContext } from "./context/filters"
+
+function useFilters() {
   const [products] = useState(initialProducts)
-  const [filters, setFilters] = useState({
-    category: 'all',
-    minPrice: 0
-  })
+  const filters = useContext(FiltersContext)
+
+  const setFilters = () => { }
+
+  // const [filters, setFilters] = useState({
+  //   category: 'all',
+  //   minPrice: 0
+  // })
 
   const filterProducts = (products) => {
     return products.filter((product) => {
@@ -25,10 +32,17 @@ function App() {
 
   const filterP = useMemo(() => filterProducts(products), [filters])
 
+  return { setFilters, filterP }
+}
+
+function App() {
+  const { setFilters, filterP, } = useFilters()
+
   return (
     <>
       <Header changeFilters={setFilters} />
       <Products products={filterP} />
+      <Footer />
     </>
   )
 }
