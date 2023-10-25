@@ -1,12 +1,16 @@
 import './Products.css'
 import { AddToCartIcon } from './Icons'
+import { useFilters } from '../hooks/useFilter'
 
 
-function Products({ products }) {
+function Products() {
+
+    const { filteredProducts } = useFilters()
+
     return (
         <main className='products'>
             <ul>
-                {products.slice(0, 10).map((product) => {
+                {filteredProducts.slice(0, 10).map((product) => {
                     return (
                         <li key={product.id}>
                             <img src={product.thumbnail} alt={product.title} />
