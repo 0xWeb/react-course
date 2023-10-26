@@ -1,10 +1,36 @@
 import { useId } from "react"
-import { CartIcon } from "./Icons"
+import { CartIcon, ClearCartIcon } from "./Icons"
 
 import "./Cart.css"
+import { useCart } from "../hooks/useCart"
+
+
+const CartItem = ({ thumbnail, price, title, quantity, addToCart }) => {
+    return (
+        <li >
+            <img src={thumbnail} alt="" />
+            <div>
+                <strong>{title}</strong>${price}
+            </div>
+
+            <footer>
+                <small>
+                    Qty:{quantity}
+                </small>
+                <button onClick={addToCart}>
+                    +
+                </button>
+            </footer>
+
+        </li>
+    )
+}
 
 
 function Cart() {
+
+    const { cart, clearCart, addToCart } = useCart()
+
     const cartCheckbox = useId()
 
     return (
@@ -16,23 +42,20 @@ function Cart() {
 
             <aside className="cart">
                 <ul>
-                    <li>
-                        <img src="https://i.dummyjson.com/data/products/1/thumbnail.jpg" alt="" />
-                        <div>
-                            <strong></strong>$
-                        </div>
-
-                        <footer>
-                            <small>
-                                Qty:
-                            </small>
-                            <button>
-                                +
-                            </button>
-                        </footer>
-
-                    </li>
+                    {
+                        cart.map((product) => {
+                            return (
+                                <CartItem
+                                    key={product.id}
+                                    addToCart={() => addToCart(product)}
+                                    {...product} />
+                            )
+                        })
+                    }
                 </ul>
+                <button onClick={() => clearCart()}>
+                    <ClearCartIcon />
+                </button>
             </aside>
 
         </>
