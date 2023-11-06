@@ -1,7 +1,18 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+
+const NAVIGATION_EVENT = 'pushstate'
+
+
+function navigate(href) {
+  window.history.pushState({}, '', href)
+
+  // Create a personalized event
+  const navigationEvent = new Event(NAVIGATION_EVENT)
+  window.dispatchEvent(navigationEvent)
+}
 
 
 function HomePage() {
@@ -13,7 +24,7 @@ function HomePage() {
       <p>
         This is a example page to create a React Router
       </p>
-      <a href="/about">About</a>
+      <button onClick={() => navigate('/about')} >About</button>
     </>
   )
 }
@@ -28,7 +39,7 @@ function AboutPage() {
       <p>
         This is a example page to create a React Router in about page
       </p>
-      <a href="/">Home</a>
+      <button onClick={() => navigate('/')} >Home</button>
     </>
   )
 }
@@ -36,6 +47,19 @@ function AboutPage() {
 function App() {
 
   const [currentPath, setCurrentPath] = useState(window.location.pathname)
+
+  useEffect(() => {
+    const onLocationChange = () => {
+      setCurrentPath(window.location.pathname)
+    }
+
+    window.addEventListener(NAVIGATION_EVENT, onLocationChange)
+
+    return () => {
+      window.removeEventListener(NAVIGATION_EVENT, onLocationChange)
+    }
+  }, [])
+
 
   return (
     <main>
