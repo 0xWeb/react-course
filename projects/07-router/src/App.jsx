@@ -9,7 +9,7 @@ const NAVIGATION_EVENT = 'pushstate'
 function navigate(href) {
   window.history.pushState({}, '', href)
 
-  // Create a personalized event
+  // Create a personalized event notify the browser that the url is changed
   const navigationEvent = new Event(NAVIGATION_EVENT)
   window.dispatchEvent(navigationEvent)
 }
